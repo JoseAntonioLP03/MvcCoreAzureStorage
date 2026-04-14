@@ -1,0 +1,94 @@
+﻿@model IEnumerable<MvcCoreAzureStorage.Models.Cliente>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+
+<form method="post">
+    <label>Introduzca empresa</label>
+    <input type="text" name="empresa" class="form-control" />
+    <button class="btn btn-info">
+        Buscar clientes
+    </button>
+</form>
+
+
+@if (Model != null)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Edad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Salario)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IDCliente)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Empresa)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PartitionKey)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RowKey)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Timestamp)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Edad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Salario)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IDCliente)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Empresa)
+                    </td>
+                    <td>
+                        <a asp-controller="AzureTables" asp-action="Details"
+                           asp-route-partitionkey="@item.PartitionKey"
+                           asp-route-rowkey="@item.RowKey"
+                           class="btn btn-outline-primary">
+                            Details
+                        </a>
+                        <a asp-controller="AzureTables" asp-action="Delete"
+                           asp-route-partitionkey="@item.PartitionKey"
+                           asp-route-rowkey="@item.RowKey"
+                           class="btn btn-outline-danger">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+    
